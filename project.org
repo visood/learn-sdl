@@ -1,0 +1,7 @@
+#+TITLE: Make games with SDL2.
+
+SDL is an alternative to SFML.
+I have started this project to follow online tutorials to make games.
+The emphasis will be on learning to make games, and not the details of SDL2. 
+It will abstract away the rendering library (SDL/SFML) and focus my code on
+game. 
