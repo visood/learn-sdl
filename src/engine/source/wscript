@@ -1,0 +1,26 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
+import glob, os
+
+DIRS = ""
+
+
+def build(bld):
+    """..."""
+    cpp_files={
+        file.split("/")[-1]
+        for file in glob.glob(bld.path.abspath() + "/*.cpp")}
+    print(
+        "building at P",
+        bld.path.abspath())
+
+    INCLUDES=[
+      "../include"] + bld.env.INCLUDES_ABS
+         
+    bld.objects(
+        source=cpp_files,
+        target="game_engine",
+        includes=INCLUDES,
+        cxxflags=bld.env.CXXFLAGS)
+    bld.recurse(DIRS)

@@ -50,7 +50,7 @@ def global_env(context):
     context.env.append_unique(
         "INCLUDES_REL",
         ["include",
-         "include/utils"])
+         "engine/include"])
 
 def configure_gcc(conf):
     """..."""

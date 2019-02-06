@@ -4,7 +4,7 @@
 #from waflib.Configure import conf
 import glob, os
 
-DIRS = "engine source"
+DIRS = "source"
 
 def build(bld):
     """..."""

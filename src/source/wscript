@@ -5,13 +5,38 @@ import glob, os
 
 DIRS = "tutorial"
 
+sources_with_main=[
+    "main.cpp"]
+
 def build(bld):
     """..."""
     print(
         "building at",
         bld.path.abspath())
+    cpp_files={
+        file.split("/")[-1]
+        for file in glob.glob(
+                bld.path.abspath() + "*.cpp")}
     INCLUDES=\
         ["../" + x for x in bld.env.INCLUDES_REL] + bld.env.INCLUDES_ABS
     print(
         "INCLUDES: {}".format(INCLUDES))
+    bld.objects(
+        source=cpp_files.difference(
+            sources_with_main),
+        target="example_game",
+        cxxflags=bld.env.CXXFLAGS)
+    bld.env.append_unique(
+        "targets",
+        os.path.join(
+            bld.path.srcpath(),
+            "ExampleGame"))
+    bld.program(
+        source="main.cpp",
+        use=["FS", "game_engine"],
+        target="ExampleGame",
+        stlib=bld.env.STLIB,
+        cxxflags=bld.env.CXXFLAGS,
+        includes=INCLUDES,
+        lib=bld.env.LDFLAGS_N)
     bld.recurse(DIRS)
