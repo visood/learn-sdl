@@ -34,19 +34,12 @@ def global_env(context):
         APPNAME
     context.env.append_unique(
         "LDFLAGS_N",
-        ["SDL2-2.0.0",
-         "bz2",
+        ["bz2",
          "gsl",
          "gslcblas",
-         "dl",
-         "c++fs"])
-    context.env.append_unique(
-        "LIBPATH_FS",
-        ["/usr/local/opt/llvm/lib"])
-    context.env.LIBPATH_MYLIB = ['/usr/local/lib']
-    context.env.append_unique(
-        "CATCH_PATH",
-        "/usr/local/include/Catch")
+         "dl"])
+    context.env.LIBPATH_MYLIB=[
+        '/usr/local/lib']
     context.env.append_unique(
         "INCLUDES_REL",
         ["include",
@@ -67,26 +60,36 @@ def configure_gcc(conf):
     conf.env.append_unique(
         "STLIB",
         "stdc++")
+    conf.env.append_unique(
+        "LDFLAGS_N",
+        ["SDL2-2.0",
+         "stdc++fs"])
+
+    conf.env.append_unique(
+        "CXXFLAGS",
+        ["-std=c++17"])
     conf.setenv(
         "gcc-release",
         env=conf.env.derive())
-    conf.env.CXXFLAGS=[
-        '-Wall',
-        '-Wno-unknown-pragmas',
-        '-Wextra',
-        '-Wconversion',
-        '-O3',
-        '-std=c++17']
+    conf.env.append_unique(
+        "CXXFLAGS",
+        ['-Wall',
+         '-Wno-unknown-pragmas',
+         '-Wextra',
+         '-Wconversion',
+         '-O3'])
     conf.define(
         'RELEASE', 1)
+
     conf.setenv(
         'gcc-debug',
         env=conf.env.derive())
-    conf.env.CXXFLAGS=[
-        '-DDEBUG',
-        '-D_GLIBCXX_DEBUG',
-        '-D_GLIBCXX_DEBUG_PEDANTIC',
-        '-g', '-std=c++14']
+    conf.env.append_unique(
+        "CXXFLAGS",
+        ['-DDEBUG',
+         '-D_GLIBCXX_DEBUG',
+         '-D_GLIBCXX_DEBUG_PEDANTIC',
+         '-g'])
     conf.define('DEBUG', 1)
 
 def configure_clang(conf):
@@ -107,9 +110,18 @@ def configure_clang(conf):
         conf)
     conf.env.append_unique(
         "LDFLAGS_N",
-        ["pthread",
+        ["SDL2-2.0.0",
+         "pthread",
          "util",
-         "m"])
+         "m",
+         "c++fs"])
+    conf.env.append_unique(
+        "LIBPATH_FS",
+        ["/usr/local/opt/llvm/lib"])
+    conf.env.append_unique(
+        "CATCH_PATH",
+        "/usr/local/include/Catch")
+
     conf.setenv(
         "clang-release",
         env=conf.env.derive())
@@ -137,6 +149,7 @@ def configure_clang(conf):
         ["c++", "c++abi"])
     conf.define(
         "RELEASE", 1)
+
     conf.setenv(
         "clang-debug",
         env=conf.env.derive())
