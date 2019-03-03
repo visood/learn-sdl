@@ -37,9 +37,10 @@ def global_env(context):
         ["bz2",
          "gsl",
          "gslcblas",
-         "dl"])
+         "dl",
+         "stdc++fs"])
     context.env.LIBPATH_MYLIB=[
-        '/usr/local/lib']
+        "/usr/local/lib"]
     context.env.append_unique(
         "INCLUDES_REL",
         ["include",
@@ -63,6 +64,7 @@ def configure_gcc(conf):
     conf.env.append_unique(
         "LDFLAGS_N",
         ["SDL2-2.0",
+         "SDL2_image",
          "stdc++fs"])
 
     conf.env.append_unique(

@@ -17,10 +17,10 @@ void Game::init(
   int   height,
   bool  fullscreen)
 {
-  _update_count =
+  _update_count=
     0;
-  uint32_t flags =
-    fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
+  uint32_t flags=
+    fullscreen? SDL_WINDOW_FULLSCREEN : 0;
   const auto initialization=
     SDL_Init(SDL_INIT_EVERYTHING);
   if (initialization != 0) {
@@ -32,8 +32,8 @@ void Game::init(
   else
     std::cout << "SUCCESS: SDL subsystems initialized"
               << std::endl;
-  _window
-    = SDL_CreateWindow(
+  _window=
+    SDL_CreateWindow(
       title,
       xpos, ypos,
       width, height,
@@ -41,8 +41,8 @@ void Game::init(
   if (not _window)
     throw 
       "FAILURE: could not create a window.";
-  _renderer
-    = SDL_CreateRenderer(
+  _renderer=
+    SDL_CreateRenderer(
       _window, -1, 0);
   if (not _renderer)
     throw 
@@ -52,12 +52,17 @@ void Game::init(
     255, 255, 255, 255);
   _is_running =
     true;
-  SDL_Surface* surface_tmp =
+  SDL_Surface* surface_tmp=
     IMG_Load(
-      "assets/wild-haired.png");
-  texture_player =
+      get_resource(
+        "example",
+        Resource::graphics,
+        "wild-haired.png")
+      .c_str());
+  texture_player=
     SDL_CreateTextureFromSurface(
-      renderer, surface_tmp);
+      _renderer,
+      surface_tmp);
   SDL_FreeSurface(
     surface_tmp);
 }
@@ -80,7 +85,9 @@ void Game::update()
   destination_rectangle.w=
     64;
   destination_rectangle.x=
-    _udpate_count;
+    _update_count;
+  destination_rectangle.y=
+    _update_count;
   std::cout << "Example showing that update is called in the game loop."
             << std::endl
             << "Game update count " << _update_count
@@ -90,11 +97,21 @@ void Game::render()
 {
   SDL_RenderClear(
     _renderer);
-  SDL_RenderCopy(
-    renderer,
-    texture_player,
-    NULL,
-    NULL);
+  int render_copy_status=
+    SDL_RenderCopy(
+      _renderer,
+      texture_player,
+      NULL,
+      &destination_rectangle);
+  std::cout << "Render status"
+            << render_copy_status
+            << std::endl;
+  if (render_copy_status != 0) {
+    std::cout << "Error in rendering the image!"
+              << SDL_GetError()
+              << std::endl;
+  }
+
   SDL_RenderPresent(
     _renderer);
 }

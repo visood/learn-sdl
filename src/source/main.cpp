@@ -16,9 +16,9 @@ int main(int argc, char** argv)
   const int FrameDelay
     = 1000 / FramesPerSecond;
   Uint32 frameStartTime;
-  int frameDuration;
-  game
-    = new Game();
+  int duration_frame;
+  game= 
+    new Game();
   game->
     init(
       "LearnToMakeGames",
@@ -27,21 +27,22 @@ int main(int argc, char** argv)
       800, 600,
       false);
   while (game->is_running()) {
-
-    frameStartTime
-      = SDL_GetTicks();
-    game->handleEvents();
-    game->update();
-    game->render();
-
-    frameDuration
-      = SDL_GetTicks() - frameStartTime;
-    if (FrameDelay > frameDuration) {
+    frameStartTime= 
+      SDL_GetTicks();
+    game->
+      handleEvents();
+    game->
+      update();
+    game->
+      render();
+    duration_frame= 
+      SDL_GetTicks() - frameStartTime;
+    if (FrameDelay > duration_frame) {
       SDL_Delay(
-        FrameDelay - frameDuration);
+        FrameDelay - duration_frame);
     }
   }
-  game->clean();
-    
+  game->
+    clean();
   return 0;
 }
