@@ -37,8 +37,8 @@ def global_env(context):
         ["bz2",
          "gsl",
          "gslcblas",
-         "dl",
-         "stdc++fs"])
+         "dl"])
+         
     context.env.LIBPATH_MYLIB=[
         "/usr/local/lib"]
     context.env.append_unique(
@@ -111,8 +111,16 @@ def configure_clang(conf):
     global_env(
         conf)
     conf.env.append_unique(
+        "INCLUDES_ABS",
+        os.path.join(
+            "/Applications/Xcode.app",
+            "Contents/Developer/Platforms/MacOSX.platform",
+            "Developer/SDKs/MacOSX.sdk",
+            "usr", "include"))
+    conf.env.append_unique(
         "LDFLAGS_N",
         ["SDL2-2.0.0",
+         "SDL2_image",
          "pthread",
          "util",
          "m",

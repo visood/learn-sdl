@@ -41,17 +41,23 @@ void Game::init(
   if (not _window)
     throw 
       "FAILURE: could not create a window.";
+  std::cout << "SUCCESS: SDL window created"
+            << std::endl;
   _renderer=
     SDL_CreateRenderer(
       _window, -1, 0);
   if (not _renderer)
     throw 
       "FAILURE: could not create a renderer.";
+  std::cout  << "SUCCESS: Renderer created"
+             << std::endl;
   SDL_SetRenderDrawColor(
     _renderer,
     255, 255, 255, 255);
   _is_running =
     true;
+  std::cout << "set renderer draw color"
+            << std::endl;
   SDL_Surface* surface_tmp=
     IMG_Load(
       get_resource(
@@ -59,10 +65,15 @@ void Game::init(
         Resource::graphics,
         "wild-haired.png")
       .c_str());
+      //"resources/example/graphics/wild-haired.png");
+  std::cout << "SUCCESS: surface created. "
+            << std::endl;
   texture_player=
     SDL_CreateTextureFromSurface(
       _renderer,
       surface_tmp);
+  std::cout << "SUCCESS: layer texture created. "
+            << std::endl;
   SDL_FreeSurface(
     surface_tmp);
 }
